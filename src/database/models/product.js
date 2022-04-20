@@ -11,6 +11,6 @@ const product = sequelize.define("product", {
   price: { type: DataTypes.FLOAT },
 });
 
-product.sync();
+product.sync({ altered: true });
 
 export default product;
