@@ -12,7 +12,6 @@ const Product = sequelize.define("product", {
   description: { type: DataTypes.TEXT },
   image: { type: DataTypes.STRING },
   price: { type: DataTypes.FLOAT },
-  productId: { type: DataTypes.FLOAT },
 });
 
 //Product.sync({ alter: true });

@@ -8,9 +8,9 @@ const review = sequelize.define("review", {
     primaryKey: true,
   },
 
-  text: { type: DataTypes.TEXT },
-  username: { type: DataTypes.STRING },
-  productId: { type: DataTypes.FLOAT },
+  title: { type: DataTypes.TEXT },
+  content: { type: DataTypes.STRING },
+  productId: { type: DataTypes.STRING },
 });
 
 //review.sync(); //this will create the review if it's not present
