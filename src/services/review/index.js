@@ -1,12 +1,12 @@
 import express from "express";
 import models from "../../database/models/index.js";
 
-const { review } = models;
+const { review, Product } = models;
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const allReviews = await review.findAll();
+    const allReviews = await review.findAll({ include: Product });
     res.send(allReviews);
   } catch (error) {
     console.error(error);
@@ -15,11 +15,11 @@ router.get("/", async (req, res, next) => {
 });
 router.get("/:id", async (req, res, next) => {
   try {
-    const reviews = await review.findByPk(req.params.id);
+    const reviews = await review.findByPk(req.params.id, { include: Product });
     if (review === null) {
       console.log("review not found");
     } else {
-      res.send(review);
+      res.send(reviews);
     }
   } catch (error) {
     console.error(error);

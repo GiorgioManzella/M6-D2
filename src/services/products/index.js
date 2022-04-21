@@ -1,12 +1,12 @@
 import express from "express";
 import models from "../../database/models/index.js";
 
-const { Product } = models;
+const { Product, review } = models;
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll();
+    const products = await Product.findAll({ include: review });
     res.send(products);
   } catch (error) {
     console.error(error);
@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
 });
 router.get("/:id", async (req, res, next) => {
   try {
-    const products = await Product.findByPk(req.params.id);
+    const products = await Product.findByPk(req.params.id, { include: review });
     if (products === null) {
       console.log("Product not found");
     } else {
@@ -55,7 +55,9 @@ router.put("/:id", async (req, res, next) => {
 });
 router.delete("/:id", async (req, res, next) => {
   try {
-    const rows = await Product.destroy({ where: { id: req.params.id } });
+    const rows = await Product.destroy({
+      where: { id: req.params.id },
+    });
     console.log("Product destroyed");
     res.send({ rows });
   } catch (error) {
