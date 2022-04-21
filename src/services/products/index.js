@@ -1,39 +1,63 @@
 import express from "express";
-//import product from "../../database/models/product.js";
+import models from "../../database/models/index.js";
 
+const { Product } = models;
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    res.send("hello worrd!");
+    const products = await Product.findAll();
+    res.send(products);
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
-router.get("/:id", (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
+    const products = await Product.findByPk(req.params.id);
+    if (products === null) {
+      console.log("Product not found");
+    } else {
+      res.send(products);
+    }
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
+    const newProduct = await Product.create({
+      name: req.body.name,
+      category: req.body.category,
+      description: req.body.description,
+      image: req.body.image,
+      price: req.body.price,
+      productId: req.body.productId,
+    });
+    res.send(newProduct);
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
-router.put("/:id", (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
+    const products = await Product.update(req.body, {
+      where: { id: req.params.id },
+    });
+    res.send(products);
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
+    const rows = await Product.destroy({ where: { id: req.params.id } });
+    console.log("Product destroyed");
+    res.send({ rows });
   } catch (error) {
     console.error(error);
     next(error);

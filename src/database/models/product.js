@@ -1,16 +1,20 @@
 import sequelize from "../index.js";
-import { DataTypes } from "sequelize/types";
+import { DataTypes } from "sequelize";
 
-const product = sequelize.define("product", {
-  id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 },
-  primaryKey: true,
+const Product = sequelize.define("product", {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   name: { type: DataTypes.STRING },
   category: { type: DataTypes.STRING },
   description: { type: DataTypes.TEXT },
   image: { type: DataTypes.STRING },
   price: { type: DataTypes.FLOAT },
+  productId: { type: DataTypes.FLOAT },
 });
 
-product.sync({ altered: true });
+//Product.sync({ alter: true });
 
-export default product;
+export default Product;

@@ -18,4 +18,12 @@ export const testDB = async () => {
   }
 };
 
+export const syncDB = async () => {
+  try {
+    await sequelize.sync({}); //force: true });  //this will delete all table content
+  } catch (error) {
+    console.log("failed to sync");
+  }
+};
+
 export default sequelize;

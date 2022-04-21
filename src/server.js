@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { testDB } from "./database/index.js";
+import { testDB, syncDB } from "./database/index.js";
 import productsRouter from "./services/products/index.js";
 import reviewsRouter from "./services/review/index.js";
 
@@ -19,6 +19,7 @@ const initialize = async () => {
     server.listen(port, async () => {
       console.log("server is running on port " + port);
       await testDB();
+      await syncDB();
     });
 
     server.on("error", (error) => {
