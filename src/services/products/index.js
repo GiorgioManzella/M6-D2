@@ -4,15 +4,40 @@ import models from "../../database/models/index.js";
 const { Product, review } = models;
 const router = express.Router();
 
+// NORMAL GET +  QUERY NAME****************************************
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll({ include: review });
+    const products = await Product.findAll({
+      include: review,
+      where: { name: { [sequelize.Op.like]: `%${req.query.name}%` } },
+    });
     res.send(products);
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
+
+// GET BY PRICE RANGE ***********************************
+router.get("/test", async (req, res, next) => {
+  try {
+    const products = await Product.findAll({
+      include: review,
+      where: {
+        price: {
+          [sequelize.Op.between]: [req.query.price, req.query.price2],
+        },
+      },
+      order: [["price", "DESC"]],
+    });
+    res.send(products);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// GET BY ID ***********************************************
 router.get("/:id", async (req, res, next) => {
   try {
     const products = await Product.findByPk(req.params.id, { include: review });
