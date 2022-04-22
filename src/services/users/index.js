@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const newUser = await user.create({
-      name: DataTypes.STRING,
+      name: req.body.name,
     });
     res.send(`new User created under ${newUser}`);
   } catch (error) {

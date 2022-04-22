@@ -1,11 +1,24 @@
 import express from "express";
 import models from "../../database/models/index.js";
 
-const { Product, review } = models;
+const { Product, review, user, category } = models;
 const router = express.Router();
 
-// NORMAL GET +  QUERY NAME****************************************
+// NORMAL GET ****************************************
 router.get("/", async (req, res, next) => {
+  try {
+    const products = await Product.findAll({
+      include: [review, category],
+    });
+    res.send(products);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// NORMAL GET +  QUERY NAME****************************************
+router.get("/item", async (req, res, next) => {
   try {
     const products = await Product.findAll({
       include: review,

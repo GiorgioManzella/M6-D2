@@ -10,9 +10,10 @@ const review = sequelize.define("review", {
 
   title: { type: DataTypes.TEXT },
   content: { type: DataTypes.STRING },
-  productId: { type: DataTypes.STRING },
+  userId: { type: DataTypes.UUID, primaryKey: false },
+  productId: { type: DataTypes.UUID },
 });
 
-//review.sync(); //this will create the review if it's not present
+//review.sync({ force: true }); //this will create the review if it's not present
 
 export default review;
