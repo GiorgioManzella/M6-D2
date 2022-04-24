@@ -8,9 +8,13 @@ const category = sequelize.define("category", {
     primaryKey: true,
   },
   name: { type: DataTypes.STRING },
-  categoryId: { type: DataTypes.FLOAT },
+  categoryId: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: false,
+  },
 });
 
-category.sync({ force: true });
+//category.sync({ force: true });
 
 export default category;
